@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Tecnico
+    </title>
+    <link rel="stylesheet" type="text/css" href="/public/javascripts/dist/tecnico.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="img-fluid">
+            <img src="public/images/cabecera.jpg" alt="Registro Auditorio" class="img-fluid">
+        </div>
+    </div>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary responsive">
+            <a class="navbar-brand" href="#">Tecnico: <%= user %></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item text-primary">
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a class="nav-link" href="/logout"><button class="btn btn-primary my-2 my-sm-0" type="button">Cerrar
+                        Session</button></a>
+            </form>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="container mt-3">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item home">
+                    <a class="nav-link active" data-toggle="tab" name="home" href="#home">Home</a>
+                </li>
+
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div id="home" class="container tab-pane active"><br>
+                    <h3>HOME</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-primary mt-3 mb-3">                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="inputDefault">Fecha Inicio</label>
+                                                <input id="fechaI" name="fechaI" type="text" class="form-control datepicker" placeholder="" autocomplete="off">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="inputDefault">Fecha Fin</label>
+                                                <input id="fechaF" name="fechaF" type="text" class="form-control datepicker" placeholder="" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div id="auditorios"></div>
+                                        </div>
+                                        <div class="col-lg-3">
+
+                                            <button id="buscar" class="btn btn-primary">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="t">
+                        <div id="tabla">
+                            <div id="grid" style="width: 100%; height: 400px;"></div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="img-fluid footer" >
+            <img src="public/images/footer.jpg" alt="Registro Auditorio" class="img-fluid">
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="/public/javascripts/dist/tecnico.bundle.js"></script>
+    <script type="text/javascript" src="/public/javascripts/w2ui-1.5.rc1.js"></script>
+</body>
+
+</html>
