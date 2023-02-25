@@ -3,7 +3,7 @@
  */
 var home = {
     base_datos:{
-        url: "mongodb+srv://pinaTec:pinaTec@cluster0.h5tke.mongodb.net/aulas?retryWrites=true&w=majority",
+        url:  "mongodb+srv://fciencias:fciencias@cluster0.oeoaf06.mongodb.net/?retryWrites=true&w=majority",
         port: 27017,
         nameDB: "aulas",
         collectionUsers: "user",
