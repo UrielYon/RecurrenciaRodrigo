@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Makes "field" required having at most 4 characters.</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <!-- <form id="myform">
+        <label for="field">Required, maximum length 4: </label><br>
+        <input type="text" class="left" id="nombre" name="field" placeholder="nombre"><br>
+        <input type="text" class="left" id="apellido" name="field" placeholder="apellido"><br>
+        <input type="text" class="left" id="correo" name="field" placeholder="correo"><br>
+        <input type="text" class="left" id="telefono" name="field" placeholder="telefono"><br/>
+        <input type="submit" value="Validate!">
+    </form> -->
+
+    <div class="container">
+        <h2>Registration</h2>
+        <form name="registration">
+
+            <label for="firstname">First Name</label>
+            <input type="text" name="firstname" id="firstname" placeholder="John" /><br>
+
+            <label for="lastname">Last Name</label>
+            <input type="text" name="lastname" id="lastname" placeholder="Doe" /><br>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="john@doe.com" /><br>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" /><br>
+
+            <button type="submit">Register</button>
+            <button id="guardar">Guardar</button>
+
+        </form>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+
+
+    <script>
+        // just for the demos, avoids form submit
+
+        $().ready(function() {
+            // Wait for the DOM to be ready
+
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            // var formulario = "";
+            $("#guardar").click(function() {
+                console.log(" hola mundo");
+                var formulario = $("form[name='registration']").validate({
+                    // Specify validation rules
+                    rules: {
+                        // The key name on the left side is the name attribute
+                        // of an input field. Validation rules are defined
+                        // on the right side
+                        firstname: {
+                            required: true,
+                            minlength: 2,
+                            maxlength: 10,
+
+                        },
+                        lastname: {
+                            required: true,
+                            minlength: 5,
+                            maxlength: 5,
+                        },
+                        email: {
+                            required: true,
+                            // Specify that email should be validated
+                            // by the built-in "email" rule
+                            email: true
+                        },
+                        password: {
+                            required: true,
+                            minlength: 5
+                        }
+                    },
+                    // Specify validation error messages
+                    messages: {
+                        firstname: {
+                            required: " nombre equivocado",
+                            minlength: "tines que ser mayor a 2",
+                            maxlength: "tines que ser menor a 10",
+                        },
+                        lastname: "Please enter your lastname",
+                        password: {
+                            required: "Please provide a password",
+                            minlength: "Your password must be at least 5 characters long"
+                        },
+                        email: "Please enter a valid email address"
+                    },
+                    // Make sure the form is submitted to the destination defined
+                    // in the "action" attribute of the form when valid
+                    submitHandler: function(form) {
+                        console.log(form)
+
+                        //form.submit();
+                        console.log(form)
+
+                    }
+                });
+                // console.log("------ " + Object.keys(formulario));
+                // console.log("------ " + JSON.stringify(formulario));
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>

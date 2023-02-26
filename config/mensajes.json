@@ -1,0 +1,24 @@
+{
+    "mensajes": {
+        "1": {
+            "asunto": "asunto 01",
+            "mensaje": "Se agrego correctamente tu  evento Te enviaremos un correo Sobre tu estatus en un plazo de 2 dias habiles"
+        },
+        "2": {
+            "asunto": "asunto 02",
+            "mensaje": "Lo sentimos no fue aceptado tu evento "
+        },
+        "3": {
+            "asunto": "asunto 03",
+            "mensaje": "Se agrego correctamente tu "
+        },
+        "4": {
+            "asunto": "asunto 04",
+            "mensaje": "Se agrego correctamente tu "
+        },
+        "5": {
+            "asunto": "asunto 05",
+            "mensaje": "Se agrego correctamente tu "
+        }
+    }
+}

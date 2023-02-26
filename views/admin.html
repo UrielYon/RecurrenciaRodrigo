@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Admin
+    </title>
+    <link rel="icon" type="image/png" href="/public/images/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap/css-loader.css">
+    <link rel="stylesheet" type="text/css" href="/public/javascripts/dist/admin.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="img-fluid">
+            <img src="../public/images/cabecera.png" alt="Registro Auditorio" class="img-fluid">
+        </div>
+    </div>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary responsive">
+            <a class="navbar-brand" href="#">Admistrador: <%= user %></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item text-primary">
+
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a class="nav-link" href="/logout"><button class="btn btn-primary my-2 my-sm-0" type="button">Cerrar
+                        Sesión</button></a>
+            </form>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="container mt-3">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item home">
+                    <a class="nav-link active" data-toggle="tab" name="home" href="#home">Home</a>
+                </li>
+                <li class="nav-item crear-evento">
+                    <a class="nav-link" data-toggle="tab" name="administrador" href="#menu3">Crear Evento</a>
+                </li>
+                <!--
+                   <li class="nav-item consultas">
+                       <a class="nav-link" data-toggle="tab" name="consulta" href="#menu1">Consultas</a>
+                    </li>
+                -->
+                <li class="nav-item administrar-usuarios">
+                    <a class="nav-link" data-toggle="tab" name="administrador" href="#menu2">Administrar
+                        Usuarios</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div id="home" class="container tab-pane active"><br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-primary mt-3 mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="inputDefault">Fecha
+                                                    Inicio</label>
+                                                <input id="fechaI" name="fechaI" type="text"
+                                                    class="form-control datepicker" placeholder="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="inputDefault">Fecha Fin</label>
+                                                <input id="fechaF" name="fechaF" type="text"
+                                                    class="form-control datepicker" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div id="auditorios"></div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <select id="status" class="form-control mt-3 mb-3">
+                                                <option value=-1>Seleccione una opción</option>
+                                                <option value=1>Aceptados</option>
+                                                <option value=2>Pendientes</option>
+                                            </select>
+                                            <button id="buscar" class="btn btn-primary">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="t">
+                        <div id="tabla">
+                            <div id="grid" style="width: 100%; height: 400px;"></div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <button id="mostrar" class="btn btn-primary" style="display: none">Mostrar</button>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row datosEvento" style="display: none">
+                        <div class="col-md-12">
+                            <div class="card border-primary mt-3 mb-3">
+                                <div class="card-body">
+                                    <h4 class="card-title">Datos de el evento </h4>
+                                    <h5>Datos Personales</h5>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p class="card-text nombre"></p>
+                                            <p class="card-text institucion"></p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <p class="card-text cargo"></p>
+                                            <p class="card-text telefono"></p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <p class="card-text area"></p>
+                                            <p class="card-text correo"></p>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <h5>Datos Evento </h5>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <p class="card-text evento-auditorio"></p>
+                                            <p class="card-text evento-tipo"></p>
+                                            <p class="card-text evento-asistentes"></p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <p class="card-text evento-nombre"></p>
+                                            <p class="card-text evento-tipo-evento"></p>
+                                            <p class="card-text evento-fecha-registro"></p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            
+                                            <p class="card-text evento-fecha"></p>
+                                            <p class="card-text evento-registro"></p>
+                                        </div>
+                                    </div>
+
+                                    <br>
+                                    <h5>Servicios </h5>
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <p class="card-text servicios-horas"></p>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <p class="card-text servicios-material-int"></p>
+                                            <p class="card-text servicios-material-check"></p>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <button id="evento-cambiar-status" class="btn btn-primary">Cambiar
+                                                Status</button>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <button id="evento-delete" class="btn btn-primary">eliminar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="menu1" class="container tab-pane fade"><br>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card border-primary mb-3 mt-5">
+                                    <div class="card-header">
+                                        <h1> Consulta </h1>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label" for="inputDefault">Fecha
+                                                                Inicio</label>
+                                                            <input id="fecha-consulta-Inicio" name="fecha" type="text"
+                                                                class="form-control datepicker-consultas"
+                                                                placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <label class="col-form-label" for="inputDefault">Fecha
+                                                            Fin</label>
+                                                        <input id="fecha-consulta-fin" name="fecha" type="text"
+                                                            class="form-control datepicker-consultas" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <button id="buscar_consulta" type="button"
+                                                    class="btn btn-primary mt-3">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-group group">
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="list-group tipo">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="menu2" class="container tab-pane fade"><br>
+
+                    <div id="tabla-usuarios">
+                        <div id="grid-usuarios" style="width: 100%; height: 400px;">
+                        </div>
+                    </div>
+                    <div class="row administrar-usuario" style="display: none">
+                        <div class="col-md-12">
+                            <div class="card border-primary mb-3 mt-5">
+                                <div class="card-header">
+                                    <h1> Crear Usuario </h1>
+                                </div>
+                                <div class="card-body">
+                                    <form id="formCrearUsuario">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Nombre
+                                                        Completo<i class="error">*</i></label>
+                                                    <input id="usuarios-nombre" name="usuarios-nombre" type="text"
+                                                        class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Correo
+                                                        electrónico<i class="error">*</i></label>
+                                                    <input id="usuario-correo" name="usuario-correo"
+                                                        class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Pasword
+                                                    </label>
+                                                    <input id="usuario-password" name="usuario-password" type="password"
+                                                        class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Confirma
+                                                        Password</label>
+                                                    <input id="usuario-password-confirmacion"
+                                                        name="usuario-password-confirmacion" type="password"
+                                                        class="form-control " placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div>
+                                                    <select id="usuario-tipo" class="form-control mt-3 mb-3">
+                                                        <option value="1">Seleccione una opcion</option>
+                                                        <option value="0">Admintrador</option>
+                                                        <option value="1">Usuario</option>
+                                                        <option value="2">Tecnico</option>
+                                                    </select>
+                                                </div>
+                                                <!-- <button id="usuario-boton" class="btn btn-primary">Agregar</button> -->
+                                            </div>
+                                        </div>
+                                        <button id="usuario-boton" type="submit"
+                                            class="btn btn-primary mt-3">Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row administrar-usuario-editar" style="display: none">
+                        <div class="col-md-12">
+                            <div class="card border-primary mb-3 mt-5">
+                                <div class="card-header">
+                                    <h1> Editar Usuario </h1>
+                                </div>
+                                <form id="formEditarUser">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Nombre
+                                                        Completo</label>
+                                                    <input id="usuarios-nombre-editar" name="usuarios-nombre-editar"
+                                                        type="text" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Correo
+                                                        electrónico</label>
+                                                    <input id="usuario-correo-editar" name="usuario-correo-editar"
+                                                        type="email" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Pasword
+                                                    </label>
+                                                    <input id="usuario-password-editar" name="usuario-password-editar"
+                                                        type="password" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="inputDefault">Confirma
+                                                        Password</label>
+                                                    <input id="usuario-password-confirmacion-editar"
+                                                        name="usuario-password-confirmacion-editar" type="password"
+                                                        class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div>
+                                                    <select id="usuario-tipo-editar" class="form-control mt-3 mb-3">
+                                                        <option value="-1">Seleccione una opcion</option>
+                                                        <option value="0">Admintrador</option>
+                                                        <option value="1">Usuario</option>
+                                                        <option value="2">Tecnico</option>
+                                                    </select>
+                                                </div>
+                                                <button id="usuario-boton-editar" type="submit"
+                                                    class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="menu3" class="container tab-pane fade"><br>
+                    <div class="container">
+                        <form id="formulario">
+                            <div class="container fechaAuditorio">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card border-primary mb-3 mt-5">
+                
+                                            <div class="card-header">
+                
+                                                <div class="card-body">
+                                                    <!-- Tipos de enveto -->
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Solo una vez
+                                                                                <br>
+                                                                                <input type="radio" class="form-check-input tipo"
+                                                                                    name="optionsRadios" id="solo_una_vez" value=1>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Recurrente
+                                                                                <br>
+                                                                                <input type="radio" class="form-check-input tipo"
+                                                                                    name="optionsRadios" id="recurrente" value=2>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Diario
+                                                                                <br>
+                                                                                <input type="radio" class="form-check-input tipo"
+                                                                                    name="optionsRadios" id="diario" value=3>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                
+                                                        </div>
+                                                    </div>
+                
+                
+                                                    <!-- si es Recurrente  -->
+                                                    <div class="form-group recurrente" style="display: none">
+                                                        <div class="row">
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Lunes
+                                                                                <br>
+                                                                                <input type="radio"
+                                                                                    class="form-check-input radioRecurrente"
+                                                                                    name="radiosSemanaRecurrente" id="recurrente01Lunes"
+                                                                                    value="0">
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Martes
+                                                                                <br>
+                                                                                <input type="radio"
+                                                                                    class="form-check-input radioRecurrente"
+                                                                                    name="martes" id="recurrente02Martes" value="1">
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Miercoles
+                                                                                <br>
+                                                                                <input type="radio"
+                                                                                    class="form-check-input radioRecurrente"
+                                                                                    name="miecoles" id="recurrente02Miercoles"
+                                                                                    value="2">
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Jueves
+                                                                                <br>
+                                                                                <input type="radio"
+                                                                                    class="form-check-input radioRecurrente"
+                                                                                    name="jueves" id="recurrente02Jueves" value="3">
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                Viernes
+                                                                                <br>
+                                                                                <input type="radio"
+                                                                                    class="form-check-input radioRecurrente"
+                                                                                    name="viernes" id="recurrente02Viernes" value="4">
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                
+                
+                                                        </div>
+                
+                                                        <br>
+                
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">Fecha
+                                                                        Inicio</label>
+                                                                    <input id="fechaInicioRecurrente_inicio" name="fecha" type="text"
+                                                                        class="form-control datepicker" placeholder=""
+                                                                        autocomplete="off">
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">Fecha
+                                                                        Final</label>
+                                                                    <input id="fechaFinRecurrente_fin" name="fecha" type="text"
+                                                                        class="form-control datepicker" placeholder=""
+                                                                        autocomplete="off" disabled>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">Auditorio</label>
+                                                                    <select class="form-control" id="select-auditorioR" disabled>
+                                                                        <option value="-1">Selecciona un Auditorio</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="row">
+                                                                    <div class="col-lg-2">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="9" id="9" name="horas">
+                                                                            <label class="custom-control-label" for="9">9:00 - 10:00
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="10" id="10" name="horas">
+                                                                            <label class="custom-control-label" for="10">10:00 - 11:00
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="11" id="11" name="horas">
+                                                                            <label class="custom-control-label" for="11">11:00 - 12:00
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="12" id="12" name="horas">
+                                                                            <label class="custom-control-label" for="12">12:00 - 13:00
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="13" id="13" name="horas">
+                                                                            <label class="custom-control-label" for="13">13:00 - 14:00
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="14" id="14" name="horas">
+                                                                            <label class="custom-control-label" for="14">14:00 - 15:00
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="16" id="16" name="horas">
+                                                                            <label class="custom-control-label" for="16">16:00 - 17:00
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="17" id="17" name="horas">
+                                                                            <label class="custom-control-label" for="17">17:00 - 18:00
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="18" id="18" name="horas">
+                                                                            <label class="custom-control-label" for="18">18:00 - 19:00
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input check-hora-recurrente"
+                                                                                value="19" id="19" name="horas">
+                                                                            <label class="custom-control-label" for="19">19:00 - 20:00
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                
+                                                            <button id="buscar_recurrente" type="button" class="btn btn-primary mt-3"
+                                                                disabled>Buscar</button>
+                
+                
+                                                        </div>
+                                                    </div>
+                
+                                                    <!-- Diario -->
+                                                    <div class="form-group diario" style="display: none">
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">Fecha a
+                                                                        Inicio</label>
+                                                                    <input id="fechaInicio_Diario" name="fecha" type="text"
+                                                                        class="form-control datepicker" placeholder=""
+                                                                        autocomplete="off">
+                
+                                                                </div>
+                                                            </div>
+                
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">Fecha a
+                                                                        Final</label>
+                                                                    <input id="fechaFin_Diario" name="fecha" type="text"
+                                                                        class="form-control datepicker" placeholder=""
+                                                                        autocomplete="off" disabled>
+                                                                </div>
+                                                            </div>
+                
+                
+                
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="inputDefault">Auditorio</label>
+                                                                <select class="form-control" id="select-auditorioD" disabled>
+                                                                    <option value="-1">Selecciona un Auditorio</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-2">
+                
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="9"
+                                                                            id="9-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            9:00 - 10:00
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="10"
+                                                                            id="10-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            10:00 - 11:00
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                
+                                                                <div class="col-lg-2">
+                
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="11"
+                                                                            id="11-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            11:00 - 12:00
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="12"
+                                                                            id="12-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            12:00 - 13:00
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                
+                                                                <div class="col-lg-2">
+                
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="13"
+                                                                            id="13-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            13:00 - 14:00
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="14"
+                                                                            id="14-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            14:00 - 15:00
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                
+                                                                <div class="col-lg-2">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="16"
+                                                                            id="16-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            16:00 - 17:00
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="17"
+                                                                            id="17-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            17:00 - 18:00
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-2">
+                
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="18"
+                                                                            id="18-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            18:00 - 19:00
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check-diario" type="checkbox" value="19"
+                                                                            id="19-d">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            19:00 - 20:00
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <button id="buscar_diario" type="button" class="btn btn-primary mt-3"
+                                                                disabled>Buscar</button>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div id="horarioRecurrente">
+                
+                                                            </div>
+                                                        </div>
+                
+                                                    </div>
+                
+                                                    <!--Normal-->
+                                                    <div class="form-group normal" style="display: none">
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">Fecha a
+                                                                        realizarse</label>
+                                                                    <input id="fecha" name="fecha" type="text"
+                                                                        class="form-control datepicker" placeholder=""
+                                                                        autocomplete="off">
+                                                                </div>
+                
+                                                            </div>
+                
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label" for="inputDefault">Auditorio</label>
+                                                                    <select class="form-control" id="select-auditorioN" disabled>
+                                                                        <option value="-1">Selecciona un Auditorio</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button id="fecha_buscar" type="button" class="btn btn-primary mt-3"
+                                                            disabled>Buscar</button>
+                                                    </div>
+                
+                                                    <div class="progress" style="display: none">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                            role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                                                            style="width: 75%"></div>
+                                                    </div>
+                                                    <div class="calendario" style="display: none">
+                
+                                                        <div class="horario table-responsive"></div>
+                                                        <div id="tabla-footer">
+                                                            <table style="width:100%">
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="rectangleOcupado"></div>
+                                                                        <div class="rectangleTexto">Ocupado</div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="rectanguloDisponible"></div>
+                                                                        <div class="rectangleTexto">Disponible</div>
+                
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <br>
+                                                            <h5>Favor de marcar las horas</h5>
+                                                            <br>
+                                                            <div id="horas">
+                                                                <br>
+                                                            </div>
+        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                
+                                </div>
+                            </div>
+                            <div class="container ocultar datosPersonales" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card border-primary mb-3 mt-5">
+                                            <div class="card-header">
+                                                <h1> Datos personales </h1>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="contenido1">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="nombre">Nombre completo<i
+                                                                        class="error">*</i></label>
+                                                                <input id="nombre" name="nombre" type="text" class="form-control"
+                                                                    placeholder="" autocomplete="on">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="cargo">Cargo<i
+                                                                        class="error">*</i></label>
+                                                                <input id="cargo" name="cargo" type="text" class="form-control"
+                                                                    placeholder="" autocomplete="on">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="area">Secretaría, departamento o
+                                                                    laboratorio<i class="error">*</i>
+                                                                </label>
+                                                                <input id="area" name="area" type="text" class="form-control"
+                                                                    placeholder="" autocomplete="on">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="insitutucion">Institución<i
+                                                                        class="error">*</i></label>
+                                                                <input id="institucion" name="insitutucion" type="text"
+                                                                    value="Facultad de Ciencias" class="form-control" placeholder=""
+                                                                    autocomplete="on" value="Facultad de Ciencias">
+                                                            </div>
+                                                        </div>
+                
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="telefono">Teléfono<i
+                                                                        class="error">*</i></label>
+                                                                <input id="telefono" name="telefono" type="number" class="form-control"
+                                                                    placeholder="" autocomplete="on">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="correo">Correo
+                                                                    electrónico<i class="error">*</i></label>
+                                                                <input id="correo" name="correo" class="form-control" placeholder=""
+                                                                    autocomplete="on">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container ocultar tipoEvento" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card border-primary mb-3 mt-5">
+                                            <div class="card-header">
+                                                <h1> Tipo evento </h1>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group" id="contenido2">
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <div class="custom-control custom-radio ">
+                                                                <input type="radio" id="customRadio1" name="tipo-evento" value="1"
+                                                                    text="Simposium" categoria="Divulgación"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio1">Simposium</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio5" name="tipo-evento" value="5"
+                                                                    text="Seminario" categoria="Extención"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio5">Seminario</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio9" name="tipo-evento" value="9"
+                                                                    text="Congreso" categoria="Divulgación"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio9">Congreso</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio2" name="tipo-evento" value="2"
+                                                                    text="Conferencia" categoria="Divulgación"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadio2">Conferencia</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio6" name="tipo-evento" value="6"
+                                                                    text="Reunión" categoria=""
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio6">Reunión</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio11" name="tipo-evento" value="11"
+                                                                    text="Exposición" categoria="Extención"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadio11">Exposición</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio3" name="tipo-evento" value="3"
+                                                                    text="Taller" categoria="Extención"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio3">Taller</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio7" name="tipo-evento" value="7"
+                                                                    text="Ensayo" categoria=""
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio7">Ensayo</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio12" name="tipo-evento" value="12"
+                                                                    text="Otro" categoria=""
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio12">Otro</label>
+                                                                <input id="otro_texto" name="otro_texto" type="text"
+                                                                    class="form-control" placeholder="" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio4" name="tipo-evento" value="4"
+                                                                    text="Presentación" categoria="Extención"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label" for="customRadio4">Presentación
+                                                                    escénica</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="customRadio8" name="tipo-evento" value="8"
+                                                                    text="Videoconferencia" categoria="Divulgación"
+                                                                    class="custom-control-input radio-tipo-evento" checked="">
+                                                                <label class="custom-control-label"
+                                                                    for="customRadio8">Videoconferencia</label>
+                                                            </div>
+                
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container ocultar tipoGeneralEvento" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card border-primary mb-5 mt-5">
+                                            <div class="card-header">
+                                                <h1>Datos generales del evento</h1>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label" for="inputDefault">Nombre del evento<i
+                                                                    class="error">*</i></label>
+                                                            <input id="nombreEvento" name="nombre_evento" type="text"
+                                                                class="form-control" placeholder="" autocomplete="off">
+                                                        </div>
+                
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label" for="inputDefault">Número de
+                                                                asistentes<i class="error">*</i></label>
+                                                            <input id="asistentes" name="asistentes" type="number" class="form-control"
+                                                                placeholder="" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3>Tipo de evento</h3>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio13" name="customRadio" value="0"
+                                                                class="custom-control-input datos-generales" checked="">
+                                                            <label class="custom-control-label" for="customRadio13">Solo para
+                                                                estudiantes y/o comunidad Facultad</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio14" name="customRadio" value="1"
+                                                                class="custom-control-input datos-generales" checked="">
+                                                            <label class="custom-control-label" for="customRadio14">Es un evento abierto
+                                                                al público</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio15" name="customRadio" value="2"
+                                                                class="custom-control-input datos-generales" checked="">
+                                                            <label class="custom-control-label" for="customRadio15">Privado</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pagina">Página web del evento o correo
+                                                        electrónico (de ser el caso)</label>
+                                                    <input id="pagina" name="pagina" type="text" class="form-control" placeholder=""
+                                                        autocomplete="off">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container ocultar Servicios" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card border-primary mb-5 mt-5">
+                                            <div class="card-header">
+                                                <h1> Requerimientos</h1>
+                                            </div>
+                                            <div class="card-body">
+                
+                                                <div id="serviciosNumber" class="mt-3">
+                                                </div>
+                                                <div id="serviciosCheck">
+                                                </div>
+                
+                                                <div class="check-diseño">
+                                                    <br>
+                                                    <h3>Tipo diseño<i class="error">*</i></h3>
+                                                    <div class="row col-md-12 ">
+                
+                                                        <div class="col-lg-2 custom-control custom-checkbox">
+                
+                                                            <input type="checkbox" class="custom-control-input check-serviciosDiseño"
+                                                                value="Póster" id="Póster" name="tipoDiseno">
+                                                            <label class="custom-control-label" for="Póster">Póster</label>
+                                                        </div>
+                
+                                                        <div class="col-lg-2 custom-control custom-checkbox">
+                
+                                                            <input type="checkbox" class="custom-control-input check-serviciosDiseño"
+                                                                value="Constancia_o_Diploma_electrónico" id="Constancia"
+                                                                name="tipoDiseno">
+                                                            <label class="custom-control-label" for="Constancia">Constancia o Diploma
+                                                                electrónico</label>
+                                                        </div>
+                                                        <div class="col-lg-2 custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input check-serviciosDiseño"
+                                                                value="Logotipo" id="Logotipo" name="tipoDiseno">
+                                                            <label class="custom-control-label" for="Logotipo">Logotipo</label>
+                                                        </div>
+                
+                                                        <div class="col-lg-2 custom-control custom-checkbox">
+                
+                                                            <input type="checkbox" class="custom-control-input check-serviciosDiseño"
+                                                                value="Flyer" id="Flyer" name="tipoDiseno">
+                                                            <label class="custom-control-label" for="Flyer">Flyer</label>
+                                                        </div>
+                                                        <div class="col-lg-2 custom-control custom-checkbox">
+                
+                                                            <input type="checkbox" class="custom-control-input check-serviciosDiseño"
+                                                                value="Banner_RRSS" id="Banner_RRSS" name="tipoDiseno">
+                                                            <label class="custom-control-label" for="Banner_RRSS">Banner RRSS</label>
+                                                        </div>
+                                                        <div class="col-lg-2 custom-control custom-checkbox">
+                
+                                                            <input type="file" class="btn">
+                                                            <label class="custom-control-label" for="Banner_RRSS">Subir Archivo</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <a class="tooltipInfo" data-toggle="tooltip" data-placement="right"
+                                                                    title="Esta información servirá para promover el evento en redes sociales de la Facultad"
+                                                                    data-original-title="Tooltip on right"> <label
+                                                                        class="col-form-label" for="nombre">Resumen del evento<i
+                                                                            class="error">*</i>
+                                                                    </label></a>
+                
+                                                                <!-- <input id="resumen" name="resumen" type="text" class="form-control"
+                                                                    placeholder="" autocomplete="off"> -->
+                                                                <textarea id="resumen" name="resumen" type="text" class="form-control"
+                                                                    rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="nombre">Nombre (s) completo (s) del
+                                                                    (os)
+                                                                    ponente(s) / Lugar de procedencia <i class="error">*</i></label>
+                                                                <input id="ponentes" name="ponentes" type="text" class="form-control"
+                                                                    placeholder="" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label" for="objetvo_del_evento">Objetivo del
+                                                                    evento <i class="error">*</i></label>
+                                                                <input id="objetvo_del_evento" name="objetvo_del_evento" type="text"
+                                                                    class="form-control" placeholder="" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label"
+                                                                    for="departamento_o_dependencias">Departamento o
+                                                                    dependencias que organizan <i class="error">*</i></label>
+                                                                <input id="departamento_o_dependencias"
+                                                                    name="departamento_o_dependencias" type="text" class="form-control"
+                                                                    placeholder="" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                
+                                                        <div class="col-lg-12">
+                                                            <div class="custom-control custom-checkbox">
+                
+                                                                <div class="custom-control custom-checkbox ">
+                
+                                                                    <input type="checkbox"
+                                                                        class="custom-control-input custom-checkbox difusion"
+                                                                        value="Difusion" id="Difusion">
+                                                                    <label class="custom-control-label" for="Difusion">Difusión</label>
+                                                                </div>
+                
+                
+                                                            </div>
+                
+                                                        </div>
+                
+                                                        <div class="col-lg-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="viaCorreo" id="viaCorreo" name="difucion-check">
+                                                                        <label class="custom-control-label" for="viaCorreo">Vía
+                                                                            Correo</label>
+                                                                    </div>
+                                                                </div>
+                
+                
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="pagina_web" id="pagina_web" name="difucion-check">
+                                                                        <label class="custom-control-label" for="pagina_web">Página web
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="twitter" id="twitter" name="difucion-check">
+                                                                        <label class="custom-control-label"
+                                                                            for="twitter">Twitter</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="facebook" id="facebook" name="difucion-check">
+                                                                        <label class="custom-control-label"
+                                                                            for="facebook">Facebook</label>
+                                                                    </div>
+                                                                </div>
+                
+                
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="instagram" id="instagram" name="difucion-check">
+                                                                        <label class="custom-control-label"
+                                                                            for="instagram">Instagram</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="youtube" id="youtube" name="difucion-check">
+                                                                        <label class="custom-control-label"
+                                                                            for="youtube">YouTube</label>
+                                                                    </div>
+                                                                </div>
+                
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="impresion_cartel" id="impresion_cartel"
+                                                                            name="difucion-check">
+                                                                        <label class="custom-control-label"
+                                                                            for="impresion_cartel">Impresión de cartel</label>
+                                                                    </div>
+                                                                </div>
+                
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="baner_digital" id="baner_digital"
+                                                                            name="difucion-check">
+                                                                        <label class="custom-control-label" for="baner_digital">Formato
+                                                                            banner digital</label>
+                                                                    </div>
+                                                                </div>
+                
+                
+                                                                <div class="col-lg-4">
+                                                                    <div class="custom-control custom-checkbox check-difusion">
+                                                                        <input type="checkbox"
+                                                                            class="custom-control-input custom-checkbox checkDifusion"
+                                                                            value="difusion_otro" id="difusion_otro"
+                                                                            name="difucion-check">
+                                                                        <label class="custom-control-label"
+                                                                            for="difusion_otro">Otro</label>
+                                                                        <input id="otro_difusion" name="otro_difusion" type="text"
+                                                                            class="form-control" placeholder="" autocomplete="off">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                
+                                                        </div>
+                
+                
+                                                    </div>
+                                                </div>
+                
+                                                <!-- <button id="validar" type="button" class="btn btn-primary mt-3" disabled>Guardar</button> -->
+                                                <button id="validar" type="submit" class="btn btn-primary mt-3" data-toggle="modal"
+                                                    data-target="#terminos" disabled>Guardar</button>
+                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                <!-- //aqui remplazar por clases -->
+                <div class="modal modalFin">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+            
+                                <button type="button" class="close cierra-modal" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class='container'>
+                                    <div class='col-lg-12'>
+                                        <div class='custom-control custom-checkbox '>Al pulsar el botón de "Aceptar" se confirma que
+                                            he revisado el Aviso de Privacidad Integral de la Facultad de Ciencias, UNAM.<br>
+                                            <div class='col-md-12'> <input type='checkbox'
+                                                    class='custom-control-input custom-checkbox checkAceptarTeminosyCondiciones'
+                                                    value='aceptarTerminosYcondiciones' id='aceptarTerminosYcondiciones'
+                                                    name='aceptarTerminosYcondiciones'> <label class='custom-control-label'
+                                                    for='aceptarTerminosYcondiciones'>He leído y acepto los <a
+                                                        href='http://www.fciencias.unam.mx/Privacidad.pdf'
+                                                        target='_blank'>términos</a> y <a
+                                                        href='http://www.fciencias.unam.mx/Privacidad.pdf'
+                                                        target='_blank'>condiciones</a> de
+                                                    uso.</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary respuestaModal">Aceptar</button>
+                                <button type="button" class="btn btn-primary guarda" disabled>Aceptar</button>
+                                <button type="button" class="btn btn-secondary cierra-modal" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+
+
+    <div class="">
+        <div class="container">
+
+            <div class="logo-container">
+                <img src="../public/images/footer.png" alt="Registro Auditorio" class="img-footer">
+            </div>
+        </div>
+    </div>
+
+    <!-- loading -->
+    <div id="spinnerLoading" class="loader loader-default "></div>
+    <!-- mofal -->
+ <!--   <div class="modal  respuestaModal fade" id="modalMensjae" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+
+                    <button id="modalAceptar" type="button" class="btn btn-primary"
+                        data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+    <script type="text/javascript" src="/public/javascripts/dist/admin.bundle.js"></script>
+    <script type="text/javascript" src="/public/javascripts/dist/profesor.bundle.js"></script>
+    <script type="text/javascript" src="/public/javascripts/w2ui-1.5.rc1.js"></script>
+</body>
+
+</html>

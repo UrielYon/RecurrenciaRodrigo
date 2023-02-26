@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Login
+    </title>
+    <link rel="icon" type="image/png" href="/public/images/favicon.png"/>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" type="text/css" href="/public/javascripts/dist/admin.css">
+    <script type="text/javascript" src="/public/javascripts/dist/login.bundle.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto" style="margin-top: 25%;">
+
+                <div class="card border-secondary ">
+                    <div class="card-header">Inicio Sesión</div>
+                    <div class="card-body">
+                        <form method="POST" action="/login">
+                            
+                            <div>
+                                <label for="exampleInputEmail1">Correo Electrónico:</label>
+                                <input id="correo" type="email" name="mail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresar correo electrónico  ">
+                            </div>
+                            <div>
+                                <label for="exampleInputPassword1">Contraseña</label>
+                                <input id="password" type="password" name="pass" class="form-control" autocomplete="off" placeholder="Ingresar Contraseña">
+                            </div>
+                            <button id="validar" type="submit" class="btn btn-primary mt-3 ">Iniciar Sesión</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
