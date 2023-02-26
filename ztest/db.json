@@ -1,0 +1,9 @@
+{
+    "result": { "n": 1, "ok": 1 },
+    "connection": { "id": 8, "host": "localhost", "port": 27017 },
+    "ops": [{ "nombre": "aa", "tipo": "0", "correo": "aaa", "pass": "a", "_id": "5d9d00c356135e23e787ea71" }],
+    "insertedCount": 1,
+    "insertedId": "5d9d00c356135e23e787ea71",
+    "n": 1,
+    "ok": 1
+}
