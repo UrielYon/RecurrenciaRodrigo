@@ -2009,7 +2009,7 @@ function tablaEditar(fecha, auditorio) {
 function generaHorarioEditar(data) {
     const firm = "[generaHorarioEditar]";
     //console.log(firm + JSON.stringify(data));
-    var dias = ["Horario", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+    var dias = ["Horario", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
     var temp = 1;
     for (let j in data.user) {
         dias[temp] += " " + j.split("-")[1];

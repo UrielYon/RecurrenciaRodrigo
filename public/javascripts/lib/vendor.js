@@ -503,7 +503,7 @@ export function generaHorario(data) {
     //$("#horario").empty();
     const firm = "[generaHorario] ";
 
-    var dias = ["Horario", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",]
+    var dias = ["Horario", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes",]
     var temp = 1;
     for (let j in data.admin) {
         dias[temp] += " " + j.split("-")[1];
